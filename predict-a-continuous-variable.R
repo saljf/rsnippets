@@ -7,10 +7,10 @@
 
 # Split into training and test set
 set.seed(42)
-data$train <- ifelse(runif(nrow(data)) < 0.7, 1, 0) # For 70/30 split; change if required
-train <- subset(data, train == 1)
+df$train <- ifelse(runif(nrow(df)) < 0.7, 1, 0) # For 70/30 split; change if required
+train <- subset(df, train == 1)
 train <- subset(train, select = -train)
-test <- subset(data, train == 0)
+test <- subset(df, train == 0)
 test <- subset(test, select = -train)
 
 # Feature selection - backwards selection

@@ -3,85 +3,87 @@
 ##########################################
 
 # Overview
-str(data)
-head(data)
-tail(data)
-glimpse(data) #dplyr package
+str(df)
+head(df)
+tail(df)
+glimpse(df) # dplyr package 
+summary(df)
 
 # categorical variable
-count(data, var1, var2, etc)
+count(df, col1, col2, etc)
 
 # continuous variable
-group_by(data, var) %>% # dplyr package
-  summarise(min = min(var),
-            median = median(monthly_amount),
-            max = max(monthly_amount),
-            mean = mean(monthly_amount),
-            sd = sd(monthly_amount))
+group_by(df, col) %>% # dplyr package
+  summarise(min = min(col),
+            median = median(col),
+            max = max(col),
+            mean = mean(col),
+            sd = sd(col))
 
 # Histogram
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           fill = var)) + 
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) + 
   geom_bar(stat = 'identity',
            position = position_dodge())
 
 # Density plot
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           fill = var)) +
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           fill = col)) +
   geom_density(alpha = 0.4)
 
 # Boxplot
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           fill = var)) +
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) +
   geom_boxplot() +
   coord_flip() # Optional
 
 # Column chart
-ggplot() + #ggplot2 package
-  geom_col(data,
-           aes(x = var,
-               y = var,
+ggplot() + # ggplot2 package
+  geom_col(df,
+           aes(x = col,
+               y = col,
                fill = 'string1'),
            position = position_nudge(x = 0.3), # or change parameters
            width = 0.40) +
-  geom_col(data,
-           aes(x = var,
-               y = var,
+  geom_col(df,
+           aes(x = col,
+               y = col,
                fill = 'string2'),
            position = position_nudge(x = 0.7),
            width = 0.40)
 
-#Line chart
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           group = var, # Optional
-           colour = var)) + #Optional
+# Line chart
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           y = col,
+           group = col, # Optional
+           colour = col)) + # Optional
   geom_line(size = 1)
 
 # Scatterplot (jittered)
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           colour = var)) +
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           y = col,
+           colour = col)) +
   geom_jitter()
 
 # Scatterplot (no jittering)
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           colour = var)) +
+ggplot(df, # ggplot2 package
+       aes(x = col,
+           y = col,
+           colour = col)) +
   geom_point() +
   geom_smooth(method = lm, 
               se = FALSE) # Optional regression line
 
 ### faceting
-facet_wrap( ~ var) #ggplot2 package
+facet_wrap( ~ col) #ggplot2 package
 
-# Collinearity
-pairs(data)
+# Collinearity; pairwise correlations
+pairs(df)
+cor.test(df$col1, df$col2)

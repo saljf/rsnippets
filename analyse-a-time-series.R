@@ -6,9 +6,9 @@
 ##########################################
 
 # Split into training and test set
-index <- round(nrow(data)*0.85) # For 85/15 split; change if required
-train <- data[1:index, ]
-test <- data[(index+1):nrow(data), ]
+index <- round(nrow(df)*0.85) # For 85/15 split; change if required
+train <- df[1:index, ]
+test <- df[(index+1):nrow(df), ]
 
 # Build model
 model <- lm(res ~ pred1 + pred2 + etc, train)
@@ -18,23 +18,23 @@ summary(model)
 predict <- predict(model, test)
 
 # Plot model against data: train and test (time series)
-fitted <- predict(model, data) %>% #dplyr package
+fitted <- predict(model, df) %>% #dplyr package
   as.data.frame()
-fitted <- cbind(data$date, fitted)
+fitted <- cbind(df$date, fitted)
 colnames(fitted) <- c('date', 'string')
 ggplot() +
-  geom_path(data, # predicted data
+  geom_path(df, # predicted data
             aes(x = date,
                 y = string,
                 col = 'blue', # or something else
                 group = 1),
             size = 1) +
-  geom_path(data, # observed data
+  geom_path(df, # observed data
             aes(x = var,
                 y = var,
                 group = 1),
             size = 1) +
-  geom_vline(xintercept = as.numeric(data$date[index]), # observed data
+  geom_vline(xintercept = as.numeric(df$date[index]), # observed data
              linetype = 'dashed',
              size = 1)
 
@@ -47,11 +47,11 @@ library(forecast)
 library(fpp2)
 
 # Convert to time series object
-data <- ts(data, frequency = 12, start = c(2000, 1)) # edit as appropriate
+data <- ts(df, frequency = 12, start = c(2000, 1)) # edit as appropriate
 
 # Split into training and test set
-train <- window(data, start = c(2000, 1), end = c(2015, 12)) # edit as appropriate
-test <- window(data, start = c(2016, 1), end = c(2017, 12)) # edit as appropriate
+train <- window(df, start = c(2000, 1), end = c(2015, 12)) # edit as appropriate
+test <- window(df, start = c(2016, 1), end = c(2017, 12)) # edit as appropriate
 
 # Plot train
 autoplot(train)

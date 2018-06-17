@@ -3,42 +3,42 @@
 ##########################################
 
 # Overview
-str(data)
-glimpse(data) #dplyr package
+str(df)
+glimpse(df) #dplyr package
 
 # Histogram
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           fill = var)) + 
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) + 
   geom_bar(stat = 'identity',
            position = position_dodge())
 
 # Density plot
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           fill = var)) +
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           fill = col)) +
   geom_density(alpha = 0.4)
 
 # Boxplot
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           fill = var)) +
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) +
   geom_boxplot() +
   coord_flip() # Optional
 
 # Column chart
 ggplot() + #ggplot2 package
-  geom_col(data,
-           aes(x = var,
-               y = var,
+  geom_col(df,
+           aes(x = col,
+               y = col,
                fill = 'string1'),
            position = position_nudge(x = 0.3), # or change parameters
            width = 0.40) +
-  geom_col(data,
-           aes(x = var,
-               y = var,
+  geom_col(df,
+           aes(x = col,
+               y = col,
                fill = 'string2'),
            position = position_nudge(x = 0.7),
            width = 0.40) +
@@ -47,25 +47,25 @@ ggplot() + #ggplot2 package
                                'string2' = COLOUR2))
 
 #Line chart
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           group = var, # Optional
-           colour = var)) + #Optional
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           group = col, # Optional
+           colour = col)) + #Optional
   geom_line(size = 1)
 
 # Scatterplot (jittered)
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           colour = var)) +
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           colour = col)) +
   geom_jitter()
 
 # Scatterplot (no jittering)
-ggplot(data, #ggplot2 package
-       aes(x = var,
-           y = var,
-           colour = var)) +
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           colour = col)) +
   geom_point() +
   geom_smooth(method = lm, 
               se = FALSE) # Optional regression line
@@ -73,7 +73,7 @@ ggplot(data, #ggplot2 package
 # ggplot2 variations:
 
 ### faceting
-facet_wrap( ~ var)
+facet_wrap( ~ col)
 
 ### manually change fill colours
 scale_fill_manual(name = NULL,
@@ -103,3 +103,20 @@ labs(x = 'string',
 ### move legend underneath plot
 theme(legend.direction = 'horizontal', 
       legend.position = 'bottom')
+
+# animate ggplot: export to GIF (magick package)
+
+plotf <- function (i) {
+  plot <- ggplot(etc) +
+    ggsave(filename = paste0("./plot", i,".png"),
+           width = 6, height = 4, dpi = 150)
+}
+
+seq(from = startvalue, to = endvalue, by = increment) %>% 
+  map_df(plotf)
+
+list.files(path = "./", pattern = "*.png", full.names = TRUE) %>% 
+  map(image_read) %>%
+  image_join() %>%
+  image_animate(fps = 2) %>% # speed
+  image_write('animation.gif')
