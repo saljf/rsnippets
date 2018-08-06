@@ -28,6 +28,14 @@ ggplot(df, #ggplot2 package
   geom_boxplot() +
   coord_flip() # Optional
 
+# Barchart
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) +
+  geom_bar(stat ='identity') +
+  coord_flip() # Optional
+
 # Column chart
 ggplot() + #ggplot2 package
   geom_col(df,
@@ -70,7 +78,19 @@ ggplot(df, #ggplot2 package
   geom_smooth(method = lm, 
               se = FALSE) # Optional regression line
 
+# Bubble plot
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           y = col,
+           fill = col)) +
+  geom_count() +
+  scale_size_area() # Optional
+
 # ggplot2 variations:
+
+### minimalist background
+theme(panel.background = element_blank(),
+      axis.ticks = element_blank())
 
 ### faceting
 facet_wrap( ~ col)
@@ -96,9 +116,15 @@ scale_x_continuous(limits = c(startvalue, endvalue),
 ### manually change axis labels - categorical variable
 scale_x_discrete(labels = c('string', 'string', etc))
 
-### manually change axis labels
-labs(x = 'string',
-     y = 'string')
+### manually set labels
+labs(title = 'string',
+     x = 'string',
+     y = 'string',
+     caption = 'string')
+
+### set text size and centre title
+theme(axis.text = element_text(size = 10),
+     plot.title = element_text(size = 16, hjust = 0.5))
 
 ### move legend underneath plot
 theme(legend.direction = 'horizontal', 
