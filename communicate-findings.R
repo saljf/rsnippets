@@ -36,6 +36,13 @@ ggplot(df, #ggplot2 package
   geom_bar(stat ='identity') +
   coord_flip() # Optional
 
+# Stacked barchart
+ggplot(df, #ggplot2 package
+       aes(x = col,
+           fill = col)) +
+  geom_bar(stat ='fill') +
+  coord_flip() # Optional
+
 # Column chart
 ggplot() + #ggplot2 package
   geom_col(df,
@@ -90,7 +97,8 @@ ggplot(df, #ggplot2 package
 
 ### minimalist background
 theme(panel.background = element_blank(),
-      axis.ticks = element_blank())
+      axis.ticks = element_blank(),
+      panel.grid.major.x = element_line(size = 0.5, linetype = 'solid', colour = 'lightgrey')) # Option to add gridlines back in
 
 ### faceting
 facet_wrap( ~ col)
@@ -100,6 +108,7 @@ scale_fill_manual(name = NULL,
                   values = c('value1' = 'COLOUR1',
                              'value2' = 'COLOUR2',
                              etc),
+                  na.value = 'grey', # Optional to set NAs as grey
                   labels = c('value1' = 'string',
                              'value2' = 'string',
                              etc))
@@ -110,8 +119,8 @@ expand_limits(x = c(startvalue:endvalue),
 
 ### manually change axis marks - continuous variable
 scale_x_continuous(limits = c(startvalue, endvalue),
-                   breaks = c(break1, break2, etc),
-                   labels = c('string', 'string', etc))
+                   breaks = c(break1, break2, etc), # Alternative: breaks = seq(startvalue, endvalue, increment)
+                   labels = c('string', 'string', etc)) # Show numbers as percentage: labels = percent(seq(startvalue, endvalue, increment)) # scales package
 
 ### manually change axis labels - categorical variable
 scale_x_discrete(labels = c('string', 'string', etc))
@@ -129,6 +138,9 @@ theme(axis.text = element_text(size = 10),
 ### move legend underneath plot
 theme(legend.direction = 'horizontal', 
       legend.position = 'bottom')
+
+### reverse order of legend
+guides(fill = guide_legend(reverse = TRUE))
 
 # animate ggplot: export to GIF (magick package)
 
