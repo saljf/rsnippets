@@ -21,6 +21,22 @@ df$col <- na.locf(df$col)
 # Convert to factor
 df$col <- as.factor(df$col)
 
+# Convert several to factor
+cols <- c('a', 'b', 'c')
+df[cols] <- lapply(df[cols], as.factor)
+
+# Convert to ordinal
+df$col <- factor(df$col,
+                 levels = c('1', '2', '3'),
+                 ordered = TRUE)
+
+# Convert several to ordinals
+cols <- c('a', 'b', 'c')
+df[cols] <- lapply(df[cols],
+                   factor,
+                   levels = c('1', '2', '3'),
+                   ordered = TRUE)
+
 # Convert to date (lubridate package)
 df$col <- ymd(df$col)
 
@@ -28,7 +44,7 @@ df$col <- ymd(df$col)
 df$col <- as.POSIXct(df$col,
                      format='REFER TO DOCUMENTATION')
 
-# Extract date frOm POSIX
+# Extract date from POSIX
 df$col <- as.Date(df$col,
                   tz = 'REFER TO DOCUMENTATION')
 
