@@ -40,7 +40,7 @@ ggplot(df, #ggplot2 package
 ggplot(df, #ggplot2 package
        aes(x = col,
            fill = col)) +
-  geom_bar(stat ='fill') +
+  geom_bar(position ='fill') +
   coord_flip() # Optional
 
 # Column chart
